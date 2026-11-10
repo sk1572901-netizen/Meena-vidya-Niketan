@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mark Attendance - Meena Vidya Niketan</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
+        .container { max-width: 600px; background: white; margin: 0 auto; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h2 { color: #004d40; text-align: center; }
+        .date-box { text-align: center; font-weight: bold; margin-bottom: 20px; color: #555; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: left; }
+        th { background-color: #00796b; color: white; }
+        .btn-submit { display: block; width: 100%; padding: 12px; background: #00796b; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        .btn-submit:hover { background: #004d40; }
+        .success-msg { background: #e8f5e9; color: #2e7d32; padding: 10px; border-radius: 4px; text-align: center; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="/dashboard/" style="display: inline-block; background: #555; color: white; padding: 8px 15px; text-decoration: none; border-radius: 4px; margin-bottom: 15px; font-weight: bold;">⬅️ Back to Dashboard</a>
+    <h2>Mark Students Attendance</h2>
+    <div class="date-box">तारीख: {{ today }}</div>
+
+    {% if success %}
+        <div class="success-msg">✅ अटेंडेंस सफलतापूर्वक दर्ज हो गई है!</div>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Roll No.</th>
+                    <th>Name</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student.roll_number }}</td>
+                    <td>{{ student.first_name }} {{ student.last_name }}</td>
+                    <td>
+                        <label><input type="radio" name="student_{{ student.id }}" value="Present" checked> P</label> &nbsp;
+                        <label><input type="radio" name="student_{{ student.id }}" value="Absent"> A</label>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" class="btn-submit">Submit Attendance</button>
+    </form>
+</div>
+
+</body>
+</html>

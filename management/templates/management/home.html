@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meena Vidya Niketan - ERP</title>
+    <!-- Google Fonts aur Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        body { 
+            background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%); 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .navbar { 
+            width: 100%;
+            background-color: #004d40; 
+            color: white; 
+            padding: 15px 30px; 
+            font-size: 22px; 
+            font-weight: 600; 
+            text-align: left;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .navbar i {
+            font-size: 24px;
+        }
+        .container { 
+            max-width: 750px; 
+            width: 90%;
+            margin: 60px auto; 
+            background: rgba(255, 255, 255, 0.95); 
+            padding: 40px 30px; 
+            border-radius: 16px; 
+            box-shadow: 0 10px 30px rgba(0, 77, 64, 0.15); 
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+        .logo-container {
+            margin-bottom: 25px;
+        }
+        .logo-container img {
+            height: 110px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.12));
+            transition: transform 0.3s ease;
+        }
+        .logo-container img:hover {
+            transform: scale(1.05);
+        }
+        h1 { 
+            color: #004d40; 
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        p { 
+            color: #555; 
+            font-size: 16px; 
+            max-width: 600px;
+            margin: 0 auto 35px auto;
+            line-height: 1.6;
+        }
+        .btn-container { 
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .btn { 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 14px 28px; 
+            font-size: 16px; 
+            font-weight: 500;
+            color: white; 
+            background-color: #00796b; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            text-decoration: none; 
+            transition: all 0.3s ease; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+        }
+        .btn:hover { 
+            background-color: #004d40; 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        .btn-admin { 
+            background-color: #e65100; 
+        }
+        .btn-admin:hover { 
+            background-color: #bf360c; 
+        }
+        .btn-disabled {
+            background-color: #cfd8dc;
+            color: #78909c;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        .btn-disabled:hover {
+            background-color: #cfd8dc;
+            transform: none;
+            box-shadow: none;
+        }
+        .badge {
+            font-size: 11px;
+            background: #b0bec5;
+            color: #37474f;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <i class="fa-solid fa-school"></i> Meena Vidya Niketan Portal
+    </div>
+
+    <div class="container">
+        <!-- Logo Section -->
+        <div class="logo-container">
+            <img src="{% static 'logo.png' %}" alt="School Logo">
+        </div>
+
+        <h1>स्कूल इंटीग्रेटेड नेटवर्क (ERP) में आपका स्वागत है</h1>
+        <p>यह आधुनिक पोर्टल एडमिनिस्ट्रेटर, टीचर्स, और स्टूडेंट्स को एक साथ सुरक्षित और सुगम डिजिटल प्लेटफॉर्म पर जोड़ता है।</p>
+        
+        <div class="btn-container">
+            <a href="/admin/" class="btn btn-admin" target="_blank">
+                <i class="fa-solid fa-user-shield"></i> Admin Control Panel
+            </a>
+            <a href="/login/" class="btn">
+                <i class="fa-solid fa-chalkboard-user"></i> Teacher Portal
+            </a>
+            <a href="#" class="btn btn-disabled">
+                <i class="fa-solid fa-user-graduate"></i> Student Portal <span class="badge">Coming Soon</span>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

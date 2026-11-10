@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Meena Vidya Niketan</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .login-card { background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); width: 100%; max-width: 380px; text-align: center; }
+        .logo-img { width: 120px; height: auto; margin-bottom: 15px; }
+        .login-card h2 { color: #004d40; margin: 0 0 25px 0; font-size: 24px; }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 6px; color: #333; font-weight: bold; font-size: 14px; }
+        .form-group input { width: 100%; padding: 11px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 15px; }
+        .form-group input:focus { border-color: #00796b; outline: none; }
+        .btn-login { width: 100%; padding: 12px; background-color: #00796b; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: 0.3s; }
+        .btn-login:hover { background-color: #004d40; }
+        .error-msg { color: #d32f2f; background-color: #ffebee; padding: 10px; border-radius: 6px; margin-bottom: 20px; font-size: 14px; border: 1px solid #ffcdd2; }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <!-- स्कूल का लोगो -->
+    <img src="{% static 'logo.png' %}" alt="Meena Vidya Niketan Logo" class="logo-img">
+    
+    <h2>Meena Vidya Niketan</h2>
+    <h3>Login Teacher</h3>
+    
+    {% if error %}
+        <div class="error-msg">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="login_identity">Username or Mobile Number</label>
+            <input type="text" id="login_identity" name="login_identity" placeholder="Enter username or 10-digit mobile" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        </div>
+        <button type="submit" class="btn-login">Log In</button>
+    </form>
+</div>
+
+</body>
+</html>

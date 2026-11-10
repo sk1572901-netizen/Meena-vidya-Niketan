@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <title>छात्र प्रबंधन (Student Management) - Meena Vidya</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 2px solid #00796b; padding-bottom: 15px; }
+        .logo-title-container { display: flex; align-items: center; gap: 15px; }
+        .school-logo { width: 50px; height: 50px; object-fit: contain; }
+        .btn-back { background: #37474f; color: white; text-decoration: none; padding: 10px 20px; border-radius: 4px; font-weight: bold; }
+        .main-content { display: flex; gap: 30px; flex-wrap: wrap; }
+        .form-section { flex: 1; min-width: 320px; background: #e0f2f1; padding: 20px; border-radius: 6px; height: fit-content; }
+        .list-section { flex: 2; min-width: 500px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #004d40; }
+        .form-group input, .form-group select { width: 100%; padding: 8px; border: 1px solid #00796b; border-radius: 4px; box-sizing: border-box; }
+        .btn-submit { background: #00796b; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; font-size: 16px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; background: white; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #00796b; color: white; }
+        tr:hover { background-color: #f1f1f1; }
+        .alert { padding: 12px; margin-bottom: 20px; border-radius: 4px; font-weight: bold; }
+        .alert-success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .alert-danger { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <!-- यहाँ लोगो और टाइटल को एक साथ सेट किया गया है -->
+        <div class="logo-title-container">
+            <img src="{% static 'logo.png' %}" alt="School Logo" class="school-logo">
+            <h2 style="color: #004d40; margin: 0;">छात्र प्रबंधन (Student Management)</h2>
+        </div>
+        <a href="/dashboard/" class="btn-back">⬅️ Dashboard पर जाएँ</a>
+    </div>
+
+    <!-- मैसेज अलर्ट (सफलता/त्रुटि के लिए) -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="main-content">
+        <!-- नया छात्र जोड़ने का फॉर्म -->
+        <div class="form-section">
+            <h3 style="color: #004d40; margin-top: 0; border-bottom: 1px solid #00796b; padding-bottom: 10px;">➕ नया छात्र जोड़ें</h3>
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>First Name:</label>
+                    <input type="text" name="first_name" required placeholder="उदा. Rahul">
+                </div>
+                <div class="form-group">
+                    <label>Last Name:</label>
+                    <input type="text" name="last_name" required placeholder="उदा. Kumar">
+                </div>
+                <div class="form-group">
+                    <label>रोल नंबर (Roll No.):</label>
+                    <input type="number" name="roll_number" required placeholder="उदा. 15">
+                </div>
+                <div class="form-group">
+                    <label>कक्षा (Class):</label>
+                    <select name="current_class" required>
+                        <option value="">-- चुनें --</option>
+                        {% for i in "123456789" %}
+                            <option value="{{ forloop.counter }}">Class {{ forloop.counter }}</option>
+                        {% endfor %}
+                        <option value="10">Class 10</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>सेक्शन (Section):</label>
+                    <select name="section" required>
+                        <option value="A">Section A</option>
+                        <option value="B">Section B</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-submit">💾 छात्र सेव करें (Save Student)</button>
+            </form>
+        </div>
+
+        <!-- छात्रों की लिस्ट -->
+        <div class="list-section">
+            <h3 style="color: #004d40; margin-top: 0;">📋 कुल पंजीकृत छात्र (Registered Students)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>कक्षा (Class)</th>
+                        <th>सेक्शन</th>
+                        <th>रोल नंबर</th>
+                        <th>छात्र का नाम (Student Name)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td><b>Class {{ student.current_class }}</b></td>
+                        <td>{{ student.section }}</td>
+                        <td>{{ student.roll_number }}</td>
+                        <td>{{ student.first_name }} {{ student.last_name }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" style="text-align: center; color: #777;">अभी तक कोई छात्र नहीं जोड़ा गया है।</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

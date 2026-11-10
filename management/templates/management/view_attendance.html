@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance Records - Meena Vidya Niketan</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
+        .container { max-width: 700px; background: white; margin: 0 auto; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h2 { color: #004d40; text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: left; }
+        th { background-color: #00796b; color: white; }
+        .status-present { color: #2e7d32; font-weight: bold; }
+        .status-absent { color: #c62828; font-weight: bold; }
+        .btn-back { display: inline-block; background: #555; color: white; padding: 8px 15px; text-decoration: none; border-radius: 4px; margin-bottom: 15px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="/dashboard/" class="btn-back">⬅️ Back to Dashboard</a>
+    <h2>Attendance History</h2>
+    <!-- तारीख फिल्टर करने का फॉर्म -->
+    <!-- तारीख, क्लास और सेक्शन फिल्टर करने का फॉर्म -->
+<div style="background: #e0f2f1; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+    <form method="GET" action="" style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+        
+        <!-- तारीख फिल्टर -->
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <label for="date_filter" style="font-weight: bold; color: #004d40;">तारीख (Date):</label>
+            <input type="date" id="date_filter" name="date_filter" value="{{ selected_date }}" style="padding: 8px; border: 1px solid #00796b; border-radius: 4px;">
+        </div>
+
+        <!-- क्लास फिल्टर (ड्रॉपडाउन 1 से 10) -->
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <label for="class_filter" style="font-weight: bold; color: #004d40;">कक्षा (Class):</label>
+            <select id="class_filter" name="class_filter" style="padding: 8px; border: 1px solid #00796b; border-radius: 4px; background: white; min-width: 120px;">
+                <option value="">-- All Classes --</option>
+                <option value="1" {% if selected_class == "1" %}selected{% endif %}>Class 1</option>
+                <option value="2" {% if selected_class == "2" %}selected{% endif %}>Class 2</option>
+                <option value="3" {% if selected_class == "3" %}selected{% endif %}>Class 3</option>
+                <option value="4" {% if selected_class == "4" %}selected{% endif %}>Class 4</option>
+                <option value="5" {% if selected_class == "5" %}selected{% endif %}>Class 5</option>
+                <option value="6" {% if selected_class == "6" %}selected{% endif %}>Class 6</option>
+                <option value="7" {% if selected_class == "7" %}selected{% endif %}>Class 7</option>
+                <option value="8" {% if selected_class == "8" %}selected{% endif %}>Class 8</option>
+                <option value="9" {% if selected_class == "9" %}selected{% endif %}>Class 9</option>
+                <option value="10" {% if selected_class == "10" %}selected{% endif %}>Class 10</option>
+            </select>
+        </div>
+
+        <!-- सेक्शन फिल्टर (ड्रॉपडाउन A और B) -->
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <label for="section_filter" style="font-weight: bold; color: #004d40;">सेक्शन (Section):</label>
+            <select id="section_filter" name="section_filter" style="padding: 8px; border: 1px solid #00796b; border-radius: 4px; background: white; min-width: 100px;">
+                <option value="">-- All --</option>
+                <option value="A" {% if selected_section == "A" %}selected{% endif %}>Section A</option>
+                <option value="B" {% if selected_section == "B" %}selected{% endif %}>Section B</option>
+            </select>
+        </div>
+
+        <!-- बटन -->
+        <button type="submit" style="background: #00796b; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">फिल्टर करें (Filter)</button>
+        <a href="/view-attendance/" style="background: #a0a0a0; color: white; text-decoration: none; padding: 8px 15px; border-radius: 4px; font-weight: bold;">Clear</a>
+    </form>
+</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Roll No.</th>
+                <th>Student Name</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+            <tr>
+                <td>{{ record.date }}</td>
+                <td>{{ record.student.roll_number }}</td>
+                <td>{{ record.student.first_name }} {{ record.student.last_name }}</td>
+                <td>
+                    <span class="{% if record.status == 'Present' %}status-present{% else %}status-absent{% endif %}">
+                        {{ record.status }}
+                    </span>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="text-align: center; color: #777;">कोई अटेंडेंस रिकॉर्ड उपलब्ध नहीं है।</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

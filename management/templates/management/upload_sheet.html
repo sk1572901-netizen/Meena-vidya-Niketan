@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Attendance Sheet</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; margin: 0; padding: 40px; }
+        .upload-container { max-width: 500px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; }
+        h2 { color: #004d40; }
+        input[type="file"], input[type="date"] { width: 100%; padding: 10px; margin: 15px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .btn-submit { background-color: #00796b; color: white; padding: 12px 20px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; width: 100%; font-size: 16px; }
+        .btn-submit:hover { background-color: #004d40; }
+    </style>
+</head>
+<body>
+
+<div class="upload-container">
+    <h2>📸 Upload Attendance Sheet</h2>
+    <p>Apni class ki attendance sheet ki clear photo upload karein.</p>
+    
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label><b>Attendance Ki Tarikh:</b></label>
+        <input type="date" name="attendance_date" required>
+        
+        <label><b>Select Image:</b></label>
+        <input type="file" name="attendance_photo" accept="image/*" required>
+        
+        <button type="submit" class="btn-submit">AI Scan & Process</button>
+    </form>
+</div>
+
+</body>
+</html>
